@@ -5,19 +5,26 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-
-@WebServlet(name = "HelloWorldServlet", urlPatterns = "/hello")
-public class HelloWorldServlet extends HttpServlet {
+@WebServlet(name = "CountServlet", urlPatterns = "/count")
+public class CountServlet extends HttpServlet {
+	int views = 0;
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		res.setContentType("text/html");
 		PrintWriter out = res.getWriter();
 
-		String name = req.getParameter("name");
+		String reset = req.getParameter("reset");
 
-		if(name == null){
-			name = "World";
+		views += 1;
+
+		if(reset != null){
+			views = 1;
 		}
 
-		out.println("<h1>Hello, " + name + "!</h1>");
+		if(views == 1){
+			out.println("<h2>This page has been viewed " + views + " time.</h2>");
+		} else {
+			out.println("<h2>This page has been viewed " + views + " times.</h2>");
+		}
+
 	}
 }
